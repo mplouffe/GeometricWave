@@ -21,26 +21,27 @@ public class TextColorShifter : MonoBehaviour {
     }
 	// Update is called once per frame
 	void FixedUpdate () {
-	    
-        if(isGoingUp)
-        {
-            redValue += 0.05f;
-        }else
-        {
-            redValue -= 0.05f;
-        }
 
-        if(redValue < 0)
+        if(redValue <= 0)
         {
             isGoingUp = true;
         }
 
-        if(redValue > 1)
+        if(redValue >= 1)
         {
             isGoingUp = false;
         }
 
-        Color newShade = new Color(redValue, 41f/255f, 41f/255f);
+        if (isGoingUp)
+        {
+            redValue += 0.05f;
+        }
+        else
+        {
+            redValue -= 0.05f;
+        }
+
+        Color newShade = new Color(redValue, redValue, redValue);
 
         this.textObject.color = newShade;
 	}
