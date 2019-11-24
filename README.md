@@ -1,1 +1,2 @@
-# RRCGDC-group-game
+# Geometric Wave
+
