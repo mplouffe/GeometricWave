@@ -1,3 +1,5 @@
-# Geometric Wave
+<h1>Geometric Wave</h1>
 
-![Alt text](Documents/MockUpImage01.png?raw=true "Concept Image")
+<p align="center">
+  <img src="/Documents/MockUpImage01.png">
+</p>
