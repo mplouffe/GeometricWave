@@ -15,19 +15,17 @@ public class DungeonMaster : MonoBehaviour {
     public EnemySpawner enemySpawner;
     public BuildingSpawner buildingSpawner;
     public FoliageSpawner foliageSpawner;
-    public TextAsset _xml;      // by holding the XML file as a TextAsset, we don't have to worry about Serialization
+    public TextAsset _json;      // by holding the XML file as a TextAsset, we don't have to worry about Serialization
 
 	// Use this for initialization
 	void Start () {
         // if _xml is not loaded properly, get it from the resources folder
-        if (_xml == null)
+        if (_json == null)
         {
-            _xml = (TextAsset)Resources.Load("demostage");
+            _json = (TextAsset)Resources.Load("demostage");
         }
 
-        // set up the XML document
-        xmlDoc = new XmlDocument();
-        xmlDoc.LoadXml(_xml.text);
+        // set up the JSON
  
         // set up all the objects
         cameraRotation = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamRot>();
@@ -35,12 +33,16 @@ public class DungeonMaster : MonoBehaviour {
         foliageSpawner = FindObjectOfType<FoliageSpawner>();
         buildingSpawner = FindObjectOfType<BuildingSpawner>();
 
-        // start the XML reader
-        StartCoroutine(NextEvent(0));
+        // start the Logic to run level
+        // StartCoroutine(NextEvent(0));
     }
 
+    // TODO: Add logic to wrap loading a level. NextEvent should be called by the logical level wrapper layer until the level is complete
+    // TODO: Also level should be able to load next level, or do intermission things
+
+
 	/// <summary>
-    /// This is the XML parser. Calls itself in a loop to generate the level.
+    /// This is the eent parser. 
     /// </summary>
     /// <param name="bookmark">The current layer of XML</param>
 	IEnumerator NextEvent(int bookmark) {
