@@ -121,6 +121,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &4058737 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 433978, guid: e85000f3357770444a9b3b3907ede309,
+    type: 3}
+  m_PrefabInstance: {fileID: 1068740751}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &101150899
 GameObject:
   m_ObjectHideFlags: 0
@@ -807,15 +813,47 @@ MonoBehaviour:
     m_SingletonActionBindings:
     - m_Name: 
       m_Id: 9362eb11-8076-411d-834e-fcac862484b7
-      m_Path: <Mouse>/leftButton
+      m_Path: <Keyboard>/space
       m_Interactions: 
       m_Processors: 
       m_Groups: 
       m_Action: Boost
       m_Flags: 0
   speedBoost: 100
-  boostDuration: 1
-  boostCooldown: 10
+  boostDuration: 0.2
+  boostCooldown: 2
+--- !u!114 &1005102000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005101998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16d75f4896626d4496c62d9b27b1796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shotAction:
+    m_Name: Shot
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: e6e1d7e2-6ad5-47ac-b1a4-987bd6fbee3e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 03438a5c-ba3b-4c5f-aa4e-3fa9af21d865
+      m_Path: <Mouse>/leftButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Shot
+      m_Flags: 0
+  shot: {fileID: 139798, guid: 28d5e41080ad3e24599ded9459078fbc, type: 3}
+  shotSpawn: {fileID: 4058737}
+  fireRate: 0.5
+  nextFire: 0
 --- !u!1 &1049362276
 GameObject:
   m_ObjectHideFlags: 0
