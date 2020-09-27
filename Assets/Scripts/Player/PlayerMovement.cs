@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 [System.Serializable]
 [RequireComponent(typeof(Rigidbody))]

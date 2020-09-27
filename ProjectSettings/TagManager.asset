@@ -12,6 +12,7 @@ TagManager:
   - damageImage
   - Fire
   - playerLives
+  - boostUI
   layers:
   - Default
   - TransparentFX
