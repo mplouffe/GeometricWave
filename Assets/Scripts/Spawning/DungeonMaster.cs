@@ -10,7 +10,7 @@ using System;
 public class DungeonMaster : MonoBehaviour {
 
     // properties
-    XmlDocument xmlDoc;
+    public XmlDocument xmlDoc;
     public CamRot cameraRotation;
     public EnemySpawner enemySpawner;
     public BuildingSpawner buildingSpawner;

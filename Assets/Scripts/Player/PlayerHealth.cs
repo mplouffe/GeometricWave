@@ -15,7 +15,6 @@ public class PlayerHealth : MonoBehaviour {
 
     public GameObject explosion;        // reference to the explosion game object that is created when player dies
     public GameObject player;           // reference to the player
-    private bool beingHit;
 
     void Start()
     {
@@ -35,7 +34,6 @@ public class PlayerHealth : MonoBehaviour {
     {
         if (Manager.Instance.playerIsAlive)
         {
-            beingHit = true;
             // set damaged to true in order to actiave the screen flash
             Manager.Instance.damaged = true;
             // subtract the damage

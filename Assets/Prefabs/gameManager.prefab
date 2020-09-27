@@ -66,6 +66,22 @@ MonoBehaviour:
   playerPrefab: {fileID: 110874, guid: e85000f3357770444a9b3b3907ede309, type: 3}
   playerSpawnBox: {fileID: 11463426}
   playerLivesText: {fileID: 0}
+  escape:
+    m_Name: Escape
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 876181da-23bb-431d-82bf-358be5fcf191
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: f76959d2-38d5-4a9e-bfcc-eefa106000f4
+      m_Path: <Keyboard>/escape
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Escape
+      m_Flags: 0
 --- !u!65 &6597158
 BoxCollider:
   m_ObjectHideFlags: 0

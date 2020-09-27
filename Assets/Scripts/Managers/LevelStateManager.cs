@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// This updates the player lives HUD. Also responsible for respawning the player if they still have lives, or ending the game if they are out of lives
@@ -12,7 +13,20 @@ public class LevelStateManager : MonoBehaviour {
     public GameObject playerPrefab;
     public ClearForSpawning playerSpawnBox;
     public Text playerLivesText;
+
+    public InputAction escape;
+
     private bool gameOverCalled;
+
+    void OnEnable()
+    {
+        escape.Enable();
+    }
+
+    void OnDisable()
+    {
+        escape.Enable();    
+    }
 
     // setting up the properties with the required objects
     void Start()
@@ -38,7 +52,7 @@ public class LevelStateManager : MonoBehaviour {
                 Manager.Instance.playerIsAlive = true;                                              // set the playerIsAlive boolean to true
                 Manager.Instance.ResetPlayerReference();                                            // have the manager update its reference to the player transform to the new player object
             }
-            else if (Manager.Instance.playerLives <= 0 && Application.loadedLevel == 1)
+            else if (Manager.Instance.playerLives <= 0 && SceneManager.GetActiveScene().buildIndex == 1)
             {
                 playerLivesText.text = "Lives : " + Manager.Instance.playerLives;                   // update the playerLivesUI
                 if (!gameOverCalled)
@@ -55,7 +69,7 @@ public class LevelStateManager : MonoBehaviour {
 
         // put this in here for during demos
         // if anything in the game goes wrong, you can just press escape to get back to the main menu
-        if(Input.GetKey(KeyCode.Escape))
+        if(escape.triggered)
         {
             gameOverCalled = true;
             DungeonMaster dm = GetComponent<DungeonMaster>();

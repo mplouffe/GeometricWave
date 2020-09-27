@@ -1,81 +1,96 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 [System.Serializable]
-/// Boundary
-/// This class functions to hold the x and y constraints for player movement
-public class Boundary
-{
-    public float xMin, xMax, yMin, yMax;
-}
-
+[RequireComponent(typeof(Rigidbody))]
 /// <summary>
 /// The basic player movement script.
 /// </summary>
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour
+{
+    public InputAction moveAction;
 
-    public float speed;             // the base speed multipler used by the car
-    public Boundary boundary;       // the boundaries in which the car can move
+    public float rotationSpeed;             // a modifier for the left and right speed
+    public float acceleration;        // a modifier for the forward speed
+    public float deceleration;            // a modifier for the backwards speed
+    public float drag;                  // a modifier for the natural drag you experience as you let go of the controls
+    public float rotationDrag;
 
-    public float drift;             // a modifier for the left and right speed
-    public float accelerate;        // a modifier for the forward speed
-    public float breaks;            // a modifier for the backwards speed
+    public float maxSpeed;
+    public float minSpeed;
+    public float minRotation;
 
-     void FixedUpdate()
-    { 
-    // get the direcitonal input from the player (returns -1, 0, 1)
-    float movementX = Input.GetAxis("Horizontal");
-    float movementY = Input.GetAxis("Vertical");
+    private Rigidbody rigidBody;
 
-        // depending on the up or down direction the player has input
-        // either add accelerate or subtract the brakes from the movmentY
+    private void OnEnable()
+    {
+        moveAction.Enable();
+        rigidBody = GetComponent<Rigidbody>();
+    }
+
+    private void OnDisable()
+    {
+        moveAction.Disable();
+    }
+
+    void FixedUpdate()
+    {
+        var movementInput = moveAction.ReadValue<Vector2>();
+        float movementX = movementInput.x;
+        float movementY = movementInput.y;
+
+        Vector3 linearAcceleration = new Vector3();
+
         if(movementY > 0)
         {
-            movementY += accelerate;
-        } else if(movementY< 0)
-        {
-            movementY -= breaks;
-        }
+            if (rigidBody.velocity.magnitude < maxSpeed)
+            {
+                linearAcceleration = gameObject.transform.up * acceleration;
+            }
 
-        // same as above for the x axis
-        // except plus or minus the drift value
-        if(movementX > 0)
-        {
-            movementX += drift;
-        } else if (movementX< 0)
-        {
-            movementX -= drift;
         }
-
-        // create a new vector based on our calculated movementX and movementY and apply it to the rigidbody of the player object
-        Vector3 movement = new Vector3(movementX, movementY, 0.0f);
-        GetComponent<Rigidbody>().velocity = movement * speed;
-
-        // before we bind our player to our boundary, check to see if they are above it (ie pushing against the top)
-        // or below it (ie pushing agains the bottom)
-        // if they are, set the topped or bottom to true
-        if (GetComponent<Rigidbody>().position.y > boundary.yMax)
+        else if(movementY < 0)
         {
-            Manager.Instance.topped = true;
-        }
-        else if(GetComponent<Rigidbody>().position.y<boundary.yMin)
-        {
-            Manager.Instance.bottomed = true;
+            if (rigidBody.velocity.magnitude > minSpeed)
+            {
+                linearAcceleration = -(rigidBody.velocity.normalized * deceleration);
+            }
         }
         else
         {
-            // if the player isn't pushing against the top or bottom, set them to false
-            Manager.Instance.topped = false;
-            Manager.Instance.bottomed = false;
+            if (rigidBody.velocity.magnitude > minSpeed)
+            {
+                linearAcceleration = -(rigidBody.velocity.normalized * drag);
+            }
         }
 
-        // keeping our player within the boundary
-        // if they are outside the boundary, reset their position to just inside the boundary
-        GetComponent<Rigidbody>().position = new Vector3
-           (
-            Mathf.Clamp(GetComponent<Rigidbody>().position.x, boundary.xMin, boundary.xMax),
-            Mathf.Clamp(GetComponent<Rigidbody>().position.y, boundary.yMin, boundary.yMax),
-            0.0f
-            );
+
+        float torqueModifier = 0;
+        if(movementX > 0)
+        {
+            torqueModifier = -rotationSpeed;
+        }
+        else if (movementX < 0)
+        {
+            torqueModifier = rotationSpeed;
+        }
+        else
+        {
+            if (rigidBody.angularVelocity.magnitude > minRotation)
+            {
+                if (rigidBody.angularVelocity.z < 0)
+                {
+                    torqueModifier = rotationDrag;
+                }
+                else if (rigidBody.angularVelocity.z > 0)
+                {
+                    torqueModifier = -rotationDrag;
+                }
+            }
+        }
+
+        rigidBody.AddForce(linearAcceleration);
+        rigidBody.AddTorque(transform.forward * torqueModifier);
     }
 }

@@ -102,7 +102,7 @@ public class Manager : MonoBehaviour{
     /// </summary>
     void FixedUpdate()
     {
-        if (Application.loadedLevel == 1)
+        if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             if (damageImage == null)
             {
