@@ -10,88 +10,115 @@ using UnityEngine.UI;
 /// </summary>
 public class PlayerMovement : MonoBehaviour
 {
-    public InputAction moveAction;
+    [Header("Player Controls")]
+    [SerializeField]
+    private InputAction m_moveAction;
+    [Range(0f, 1f)]
+    [SerializeField]
+    private float m_deadZone;
+    
+    [SerializeField]
+    private Rigidbody m_rigidBody;
 
-    public float rotationSpeed;             // a modifier for the left and right speed
-    public float acceleration;        // a modifier for the forward speed
-    public float deceleration;            // a modifier for the backwards speed
-    public float drag;                  // a modifier for the natural drag you experience as you let go of the controls
-    public float rotationDrag;
+    [Header("Vertical Motion")]
+    [SerializeField]
+    public float maxVerticalSpeed;
+    [SerializeField]
+    private float minVerticalSpeed;
+    [SerializeField]
+    private float m_verticalAcceleration;
+    [SerializeField]
+    private float m_verticalDrag;
 
-    public float maxSpeed;
-    public float minSpeed;
-    public float minRotation;
+    [Header("Horizontal Motion")]
+    [SerializeField]
+    public float maxHorizontalSpeed;
+    [SerializeField]
+    private float minHorizontalSpeed;
+    [SerializeField]
+    private float m_horiztonalAcceleration;
+    [SerializeField]
+    private float m_horizontalDrag;
 
-    private Rigidbody rigidBody;
+    private Vector3 m_playerMotion;
 
     private void OnEnable()
     {
-        moveAction.Enable();
-        rigidBody = GetComponent<Rigidbody>();
+        m_moveAction.Enable();
+        if (m_rigidBody == null)
+        {
+            m_rigidBody = GetComponent<Rigidbody>();
+        }
     }
 
     private void OnDisable()
     {
-        moveAction.Disable();
+        m_moveAction.Disable();
     }
 
     void FixedUpdate()
     {
-        var movementInput = moveAction.ReadValue<Vector2>();
+        var movementInput = m_moveAction.ReadValue<Vector2>();
         float movementX = movementInput.x;
         float movementY = movementInput.y;
 
-        Vector3 linearAcceleration = new Vector3();
+        m_playerMotion = Vector3.zero;
 
-        if(movementY > 0)
+        if(movementY > m_deadZone)
         {
-            if (rigidBody.velocity.magnitude < maxSpeed)
+            if (m_rigidBody.velocity.y < maxVerticalSpeed)
             {
-                linearAcceleration = gameObject.transform.up * acceleration;
+                m_playerMotion = gameObject.transform.up * m_verticalAcceleration;
             }
 
         }
-        else if(movementY < 0)
+        else if(movementY < -m_deadZone)
         {
-            if (rigidBody.velocity.magnitude > minSpeed)
+            if (m_rigidBody.velocity.y > -maxVerticalSpeed)
             {
-                linearAcceleration = -(rigidBody.velocity.normalized * deceleration);
+                m_playerMotion = -gameObject.transform.up * m_verticalAcceleration;
             }
         }
         else
         {
-            if (rigidBody.velocity.magnitude > minSpeed)
+            if (Mathf.Abs(m_rigidBody.velocity.y) > minVerticalSpeed)
             {
-                linearAcceleration = -(rigidBody.velocity.normalized * drag);
+                m_playerMotion.y = -m_rigidBody.velocity.y * m_verticalDrag;
+            }
+            else
+            {
+                m_playerMotion.y = -m_rigidBody.velocity.y;
             }
         }
 
+        if (movementX > m_deadZone)
+        {
+            if (m_rigidBody.velocity.x < maxHorizontalSpeed)
+            {
+                m_playerMotion += gameObject.transform.right * m_horiztonalAcceleration;
+            }
 
-        float torqueModifier = 0;
-        if(movementX > 0)
-        {
-            torqueModifier = -rotationSpeed;
         }
-        else if (movementX < 0)
+        else if (movementX < -m_deadZone)
         {
-            torqueModifier = rotationSpeed;
+            if (m_rigidBody.velocity.x > -maxHorizontalSpeed)
+            {
+                m_playerMotion += -gameObject.transform.right * m_horiztonalAcceleration;
+            }
         }
         else
         {
-            if (rigidBody.angularVelocity.magnitude > minRotation)
+            if (Mathf.Abs(m_rigidBody.velocity.x) > minHorizontalSpeed)
             {
-                if (rigidBody.angularVelocity.z < 0)
-                {
-                    torqueModifier = rotationDrag;
-                }
-                else if (rigidBody.angularVelocity.z > 0)
-                {
-                    torqueModifier = -rotationDrag;
-                }
+                m_playerMotion.x += -m_rigidBody.velocity.x * m_horizontalDrag;
+            }
+            else
+            {
+                m_playerMotion.x += -m_rigidBody.velocity.x;
             }
         }
 
-        rigidBody.AddForce(linearAcceleration);
-        rigidBody.AddTorque(transform.forward * torqueModifier);
+
+        m_rigidBody.AddForce(m_playerMotion);
     }
 }
