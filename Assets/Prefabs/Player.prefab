@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 11438366}
   - component: {fileID: 1068740754}
   - component: {fileID: 5366314327594545551}
+  - component: {fileID: 1005101999}
+  - component: {fileID: 1005102000}
+  - component: {fileID: 5450032651952870446}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -50,7 +53,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 56
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!114 &11438366
 MonoBehaviour:
@@ -76,62 +79,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc7a863731ddf0845ab57f985fcee251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveAction:
+  m_moveAction:
     m_Name: Move
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: a64a5571-71bc-4aa8-8231-3d7ddbc253d0
+    m_Id: d764a9e8-1538-4a7c-88bc-fd52b52e5342
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
-    - m_Name: 2D Vector
-      m_Id: 9675b2b0-d431-4935-ac64-18f3795e7e7f
-      m_Path: 2DVector
+    - m_Name: 
+      m_Id: 3753e5b1-6427-4ddb-bab9-72c7c17f13f9
+      m_Path: <Gamepad>/dpad
       m_Interactions: 
       m_Processors: 
       m_Groups: 
       m_Action: Move
-      m_Flags: 4
-    - m_Name: up
-      m_Id: 804f0568-095a-4ac5-90c6-b6c16434cd3d
-      m_Path: <Keyboard>/w
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    - m_Name: down
-      m_Id: ad839efd-5605-4e0d-9bd3-1ea86ec2f180
-      m_Path: <Keyboard>/s
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    - m_Name: left
-      m_Id: 5038ce43-e3f8-46ad-993e-197b38fcc1d2
-      m_Path: <Keyboard>/a
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    - m_Name: right
-      m_Id: bd4aac14-ea3d-4c7f-b93e-25bfc1b61beb
-      m_Path: <Keyboard>/d
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-  rotationSpeed: 10
-  acceleration: 25
-  deceleration: 20
-  drag: 10
-  rotationDrag: 5
-  maxSpeed: 100
-  minSpeed: 0.5
-  minRotation: 0.25
+      m_Flags: 0
+    m_Flags: 0
+  m_deadZone: 0
+  m_rigidBody: {fileID: 5477964}
+  maxVerticalSpeed: 50
+  minVerticalSpeed: 0.1
+  m_verticalAcceleration: 25
+  m_verticalDrag: 10
+  maxHorizontalSpeed: 25
+  minHorizontalSpeed: 0.1
+  m_horiztonalAcceleration: 25
+  m_horizontalDrag: 10
 --- !u!114 &5366314327594545551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,10 +118,108 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072f578027f58914ea2f216e882081e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_rigidBody: {fileID: 5477964}
   xMin: -41
   xMax: 41
   yMin: -25
   yMax: 25
+--- !u!114 &1005101999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1c9400c10bfadc4899bcb33d651f34c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boostAction:
+    m_Name: Boost
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: b27bc09a-f27e-44a6-9f12-d69088973aee
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 9362eb11-8076-411d-834e-fcac862484b7
+      m_Path: <Keyboard>/space
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Boost
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 705b627f-b08f-4944-b71c-a70958d95a06
+      m_Path: <Gamepad>/buttonSouth
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Boost
+      m_Flags: 0
+    m_Flags: 0
+  speedBoost: 100
+  boostDuration: 0.2
+  boostCooldown: 2
+--- !u!114 &1005102000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16d75f4896626d4496c62d9b27b1796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shotAction:
+    m_Name: Shot
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: e6e1d7e2-6ad5-47ac-b1a4-987bd6fbee3e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 03438a5c-ba3b-4c5f-aa4e-3fa9af21d865
+      m_Path: <Mouse>/leftButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Shot
+      m_Flags: 0
+    - m_Name: 
+      m_Id: c46e7a91-3605-4a11-9829-53847ea57746
+      m_Path: <Gamepad>/buttonWest
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Shot
+      m_Flags: 0
+    m_Flags: 0
+  shot: {fileID: 139798, guid: 28d5e41080ad3e24599ded9459078fbc, type: 3}
+  shotSpawn: {fileID: 433978}
+  fireRate: 0.5
+  nextFire: 0
+--- !u!114 &5450032651952870446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779caf429734cdc4982ffcdfc9cefe52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 10
+  currentHealth: 0
+  explosion: {fileID: 100010, guid: 645413a00f7bd0242bbd6d0e5eb6f439, type: 3}
+  player: {fileID: 110874}
 --- !u!1 &131448
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,10 +230,9 @@ GameObject:
   m_Component:
   - component: {fileID: 414016}
   - component: {fileID: 21285060}
-  - component: {fileID: 11428432}
   - component: {fileID: 6541220}
   m_Layer: 0
-  m_Name: blackCar
+  m_Name: triangleFighter
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -196,6 +267,7 @@ SpriteRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -231,22 +303,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &11428432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 779caf429734cdc4982ffcdfc9cefe52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 10
-  currentHealth: 0
-  explosion: {fileID: 100010, guid: 645413a00f7bd0242bbd6d0e5eb6f439, type: 3}
-  player: {fileID: 110874}
 --- !u!65 &6541220
 BoxCollider:
   m_ObjectHideFlags: 0
