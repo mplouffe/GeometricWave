@@ -68,27 +68,27 @@ public class DungeonMaster : MonoBehaviour {
                     nextEvent = Single.Parse(currentEvent.ChildNodes[3].InnerText);
                     break;
                 case "garbage":
-                    enemySpawner.SpawnGarbageTruck();
+                    //enemySpawner.SpawnGarbageTruck();
                     nextEvent = Single.Parse(currentEvent.ChildNodes[1].InnerText);
                     break;
                 case "cop":
-                    enemySpawner.SpawnCopCar();
+                    //enemySpawner.SpawnCopCar();
                     nextEvent = Single.Parse(currentEvent.ChildNodes[1].InnerText);
                     break;
                 case "ambulance":
-                    enemySpawner.SpawnAmbulance();
+                    //enemySpawner.SpawnAmbulance();
                     nextEvent = Single.Parse(currentEvent.ChildNodes[1].InnerText);
                     break;
                 case "turret":
-                    enemySpawner.SpawnTurret();
+                    //enemySpawner.SpawnTurret();
                     nextEvent = Single.Parse(currentEvent.ChildNodes[1].InnerText);
                     break;
                 case "ped":
-                    enemySpawner.SpawnPedestrian();
+                    //enemySpawner.SpawnPedestrian();
                     nextEvent = Single.Parse(currentEvent.ChildNodes[1].InnerText);
                     break;
                 case "car":
-                    enemySpawner.SpawnCar();
+                    //enemySpawner.SpawnCar();
                     nextEvent = Single.Parse(currentEvent.ChildNodes[1].InnerText);
                     break;
                 case "loop":

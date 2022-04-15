@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Explodable))]
 public class Death : MonoBehaviour {
 
-    public GameObject explosion;
-    public float spawnLane = -100;
+    [SerializeField]
+    private Explodable m_explodable;
 
     /// <summary>
     /// Death
@@ -12,16 +13,8 @@ public class Death : MonoBehaviour {
     /// </summary>
     public virtual void Die()
     {
-        // if the object being killed has been given a spawn lane, return it to the pool
-        if (spawnLane != -100)
-        {
-            GameObject.FindObjectOfType<EnemySpawner>().spawnLanes.Add(spawnLane);
-        }
-
-        // create the explosion     
-        Instantiate(explosion, transform.position, transform.rotation);
-
-        // destroy this object
-        Destroy(gameObject);
+        m_explodable.explode();
+        ExplosionForce ef = GameObject.FindObjectOfType<ExplosionForce>();
+        ef.doExplosion(transform.position);
     }
 }

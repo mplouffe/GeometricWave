@@ -12,10 +12,8 @@ public class DeathDropItem : Death {
     /// </summary>
     public override void Die()
     {
-        // create the explosion     
-        Instantiate(explosion, transform.position, transform.rotation);
+        base.Die();
+        // create the explosion
         Instantiate(item, transform.position, transform.rotation);
-        // destroy this object
-        Destroy(gameObject);
     }
 }
