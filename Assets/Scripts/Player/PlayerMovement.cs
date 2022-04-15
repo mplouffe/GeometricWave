@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 [System.Serializable]
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody2D))]
 /// <summary>
 /// The basic player movement script.
 /// </summary>
@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private float m_deadZone;
     
     [SerializeField]
-    private Rigidbody m_rigidBody;
+    private Rigidbody2D m_rigidBody;
 
     [Header("Vertical Motion")]
     [SerializeField]
@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         m_moveAction.Enable();
         if (m_rigidBody == null)
         {
-            m_rigidBody = GetComponent<Rigidbody>();
+            m_rigidBody = GetComponent<Rigidbody2D>();
         }
     }
 

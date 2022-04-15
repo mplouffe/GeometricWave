@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerBoost : MonoBehaviour
 {
-    public InputAction boostAction;
+    [SerializeField]
+    private InputAction m_boostAction;
 
     public float speedBoost;
     public float boostDuration;
@@ -20,7 +21,8 @@ public class PlayerBoost : MonoBehaviour
 
     private Slider boostCooldownSlider;
 
-    private Rigidbody rigidBody;
+    [SerializeField]
+    private Rigidbody2D m_rigidBody;
 
     void Start()
     {
@@ -30,13 +32,16 @@ public class PlayerBoost : MonoBehaviour
 
     private void OnEnable()
     {
-        rigidBody = GetComponent<Rigidbody>();
-        boostAction.Enable();
+        m_boostAction.Enable();
+        if (m_rigidBody == null)
+        {
+            m_rigidBody = GetComponent<Rigidbody2D>();
+        }
     }
 
     private void OnDisable()
     {
-        boostAction.Disable();
+        m_boostAction.Disable();
     }
 
     void Update()
@@ -62,7 +67,7 @@ public class PlayerBoost : MonoBehaviour
             if (lastBoostInterval < boostDuration)
             {
                 Vector3 boostForce = gameObject.transform.up * speedBoost;
-                rigidBody.AddForce(boostForce);
+                m_rigidBody.AddForce(boostForce);
             }
             else
             {
@@ -72,7 +77,7 @@ public class PlayerBoost : MonoBehaviour
 
         if (!boosting && !boostOnCooldown)
         {
-            if (boostAction.triggered)
+            if (m_boostAction.triggered)
             {
                 lastBoost = Time.time;
                 boostOnCooldown = true;

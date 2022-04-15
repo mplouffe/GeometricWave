@@ -9,14 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 490840}
-  - component: {fileID: 5477964}
+  - component: {fileID: 7415608909464030494}
   - component: {fileID: 11438366}
   - component: {fileID: 1068740754}
   - component: {fileID: 5366314327594545551}
   - component: {fileID: 1005101999}
   - component: {fileID: 1005102000}
   - component: {fileID: 5450032651952870446}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -39,22 +39,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &5477964
-Rigidbody:
+--- !u!50 &7415608909464030494
+Rigidbody2D:
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 110874}
-  serializedVersion: 2
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 0
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_Constraints: 120
+  m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!114 &11438366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,7 +102,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
   m_deadZone: 0
-  m_rigidBody: {fileID: 5477964}
+  m_rigidBody: {fileID: 7415608909464030494}
   maxVerticalSpeed: 50
   minVerticalSpeed: 0.1
   m_verticalAcceleration: 25
@@ -118,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072f578027f58914ea2f216e882081e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_rigidBody: {fileID: 5477964}
+  m_rigidBody: {fileID: 7415608909464030494}
   xMin: -41
   xMax: 41
   yMin: -25
@@ -135,24 +140,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1c9400c10bfadc4899bcb33d651f34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boostAction:
+  m_boostAction:
     m_Name: Boost
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: b27bc09a-f27e-44a6-9f12-d69088973aee
+    m_Id: 83a59e58-331a-49c5-9e9e-e1c60276bf5e
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 9362eb11-8076-411d-834e-fcac862484b7
-      m_Path: <Keyboard>/space
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Boost
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 705b627f-b08f-4944-b71c-a70958d95a06
+      m_Id: 8d40a4b1-d686-4134-90b8-88e6195717f8
       m_Path: <Gamepad>/buttonSouth
       m_Interactions: 
       m_Processors: 
@@ -163,6 +160,7 @@ MonoBehaviour:
   speedBoost: 100
   boostDuration: 0.2
   boostCooldown: 2
+  m_rigidBody: {fileID: 0}
 --- !u!114 &1005102000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,24 +173,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c16d75f4896626d4496c62d9b27b1796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotAction:
+  m_shotAction:
     m_Name: Shot
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: e6e1d7e2-6ad5-47ac-b1a4-987bd6fbee3e
+    m_Id: f74e8fb6-a6e6-4446-a8fa-f202d819ac00
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 03438a5c-ba3b-4c5f-aa4e-3fa9af21d865
-      m_Path: <Mouse>/leftButton
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Shot
-      m_Flags: 0
-    - m_Name: 
-      m_Id: c46e7a91-3605-4a11-9829-53847ea57746
+      m_Id: fac22cb6-6cce-48e3-b77b-b682ed6ed1bc
       m_Path: <Gamepad>/buttonWest
       m_Interactions: 
       m_Processors: 
@@ -200,10 +190,10 @@ MonoBehaviour:
       m_Action: Shot
       m_Flags: 0
     m_Flags: 0
-  shot: {fileID: 139798, guid: 28d5e41080ad3e24599ded9459078fbc, type: 3}
-  shotSpawn: {fileID: 433978}
-  fireRate: 0.5
-  nextFire: 0
+  m_shot: {fileID: 139798, guid: 28d5e41080ad3e24599ded9459078fbc, type: 3}
+  m_shotSpawn: {fileID: 433978}
+  m_fireRate: 0.5
+  m_nextFire: 0
 --- !u!114 &5450032651952870446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,8 +220,8 @@ GameObject:
   m_Component:
   - component: {fileID: 414016}
   - component: {fileID: 21285060}
-  - component: {fileID: 6541220}
-  m_Layer: 0
+  - component: {fileID: 1068740753}
+  m_Layer: 6
   m_Name: triangleFighter
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -303,19 +293,39 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!65 &6541220
-BoxCollider:
+--- !u!60 &1068740753
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 131448}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.5, y: 3.75, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.44, y: 3.54}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: 1.77}
+      - {x: -1.1999999, y: -0.32999998}
+      - {x: -0.84, y: -0.98999995}
+      - {x: -0.65999997, y: -0.66999996}
+      - {x: 0, y: -1.77}
+      - {x: 0.65999997, y: -0.65}
+      - {x: 0.84, y: -0.98999995}
+      - {x: 1.22, y: -0.35}
 --- !u!1 &175154
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,7 +335,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 433978}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Shot Spawn
   m_TagString: Player
   m_Icon: {fileID: 0}

@@ -8,33 +8,43 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class PlayerShooting : MonoBehaviour {
 
-    public InputAction shotAction;
+    [SerializeField]
+    private InputAction m_shotAction;
 
-    public GameObject shot;             // reference to the object that will be spawned by the shot
-    public Transform shotSpawn;         // reference to the location where the shot will be spawned
-    public float fireRate = 0.5F;       // a wait time between shots
-    public float nextFire = 0.0F;       // used to calculate if enough time has passed so you can shoot again
+    [Header("Projectile Settings")]
+    [SerializeField]
+    private GameObject m_shot;
+
+    [SerializeField]
+    private Transform m_shotSpawn;
+    
+    [SerializeField]
+    private float m_fireRate = 0.5F;
+    
+    [SerializeField]
+    private float m_nextFire = 0.0F;
 
     private void OnEnable()
     {
-        shotAction.Enable();
+        m_shotAction.Enable();
     }
 
     private void OnDisable()
     {
-        shotAction.Disable();
+        m_shotAction.Disable();
     }
 
     void Update()
     {
         // if player is pressing shot and enough time has passed to shoot again
-        if (shotAction.triggered && nextFire < Time.time)
+        if (m_shotAction.triggered && m_nextFire < Time.time)
         {
             // set the next time the player can shoot
-            nextFire = Time.time + fireRate;
+            m_nextFire = Time.time + m_fireRate;
+
             // create the shot at the spawn position
             // TODO: Object pool this to manage GC
-            GameObject clone = Instantiate(shot, shotSpawn.position, shotSpawn.rotation) as GameObject;
+            GameObject clone = Instantiate(m_shot, m_shotSpawn.position, m_shotSpawn.rotation) as GameObject;
         }
     }
 }
