@@ -1,0 +1,10 @@
+{
+	"SpawnEvents": [
+		{
+			"type": 0,
+			"direction": 0,
+			"spawnRotation": 0,
+			"spawnOffset": { "x": 0, "y": 0}
+		}
+	]
+}

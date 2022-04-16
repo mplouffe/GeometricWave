@@ -9,15 +9,13 @@ public class LevelParser : MonoBehaviour
     private TextAsset m_levelJson;
 
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        
-    }
+        if (m_levelJson == null)
+        {
+            m_levelJson = Resources.Load<TextAsset>("level");
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        var level = JsonUtility.FromJson<Level>(m_levelJson.text);
     }
 }
