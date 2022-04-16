@@ -13,31 +13,44 @@ public class PlayerMovement : MonoBehaviour
     [Header("Player Controls")]
     [SerializeField]
     private InputAction m_moveAction;
+    
     [Range(0f, 1f)]
     [SerializeField]
     private float m_deadZone;
-    
+ 
     [SerializeField]
     private Rigidbody2D m_rigidBody;
 
     [Header("Vertical Motion")]
+
     [SerializeField]
+    [Range(0f, 100f)]
     public float maxVerticalSpeed;
+
     [SerializeField]
+    [Range(0f, 1f)]
     private float minVerticalSpeed;
+    
     [SerializeField]
+    [Range(0f, 100f)]
     private float m_verticalAcceleration;
+
     [SerializeField]
+    [Range(0f, 100f)]
     private float m_verticalDrag;
 
     [Header("Horizontal Motion")]
     [SerializeField]
+    [Range(0f, 100f)]
     public float maxHorizontalSpeed;
     [SerializeField]
+    [Range(0f, 1f)]
     private float minHorizontalSpeed;
     [SerializeField]
+    [Range(0f, 100f)]
     private float m_horiztonalAcceleration;
     [SerializeField]
+    [Range(0f, 100f)]
     private float m_horizontalDrag;
 
     private Vector3 m_playerMotion;

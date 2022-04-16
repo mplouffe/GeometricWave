@@ -60,8 +60,6 @@ public class LevelStateManager : MonoBehaviour {
                     gameOverCalled = true;                                                          // set game over called to true (otherwise it will call game over every update)
                     DungeonMaster dm = GetComponent<DungeonMaster>();                               // turn off all the coroutines
                     dm.StopAllCoroutines();
-                    dm.foliageSpawner.StopAllCoroutines();
-                    dm.buildingSpawner.StopAllCoroutines();
                     StartCoroutine(LoadGameOver());                                                 // load game over
                 }
             }
@@ -74,8 +72,6 @@ public class LevelStateManager : MonoBehaviour {
             gameOverCalled = true;
             DungeonMaster dm = GetComponent<DungeonMaster>();
             dm.StopAllCoroutines();
-            dm.foliageSpawner.StopAllCoroutines();
-            dm.buildingSpawner.StopAllCoroutines();
             SceneManager.LoadScene(0);
         }
     }

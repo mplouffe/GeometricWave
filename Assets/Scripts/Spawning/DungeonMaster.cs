@@ -13,8 +13,6 @@ public class DungeonMaster : MonoBehaviour {
     public XmlDocument xmlDoc;
     public CamRot cameraRotation;
     public EnemySpawner enemySpawner;
-    public BuildingSpawner buildingSpawner;
-    public FoliageSpawner foliageSpawner;
     public TextAsset _json;      // by holding the XML file as a TextAsset, we don't have to worry about Serialization
 
 	// Use this for initialization
@@ -30,8 +28,6 @@ public class DungeonMaster : MonoBehaviour {
         // set up all the objects
         cameraRotation = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamRot>();
         enemySpawner = FindObjectOfType<EnemySpawner>();
-        foliageSpawner = FindObjectOfType<FoliageSpawner>();
-        buildingSpawner = FindObjectOfType<BuildingSpawner>();
 
         // start the Logic to run level
         // StartCoroutine(NextEvent(0));
@@ -98,21 +94,17 @@ public class DungeonMaster : MonoBehaviour {
                 case "buildings":
                     char buildingSide = char.Parse(currentEvent.ChildNodes[1].InnerText);
                     float buildingFrequency = Single.Parse(currentEvent.ChildNodes[2].InnerText);
-                    buildingSpawner.setBuildings(buildingSide, buildingFrequency);
                     nextEvent = Single.Parse(currentEvent.ChildNodes[3].InnerText);
                     break;
                 case "buildingsOff":
-                    buildingSpawner.stopBuildings();
                     nextEvent = Single.Parse(currentEvent.ChildNodes[1].InnerText);
                     break;
                 case "foliage":
                     char foliageSide = char.Parse(currentEvent.ChildNodes[1].InnerText);
                     float foliageFrequency = Single.Parse(currentEvent.ChildNodes[2].InnerText);
-                    foliageSpawner.setFoliage(foliageSide, foliageFrequency);
                     nextEvent = Single.Parse(currentEvent.ChildNodes[3].InnerText);
                     break;
                 case "foliageOff":
-                    foliageSpawner.stopFoliage();
                     nextEvent = Single.Parse(currentEvent.ChildNodes[1].InnerText);
                     break;
             }
