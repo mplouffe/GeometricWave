@@ -2,51 +2,34 @@
 using System.Collections;
 using System.Collections.Generic;
 
-/// <summary>
-/// GameController Script
-/// A basic script that is used to simply spawn enemies.
-/// Good to use to test the enemies you've created.
-/// Will eventually be replaced by the the procedurally generation scripts.
-/// </summary>
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField]
-    private GameObject m_enemyPrefab;
+    private Collider2D m_northSpawnArea;
 
     [SerializeField]
-    private Collider2D m_spawnArea;
+    private Collider2D m_eastSpawnArea;
 
     [SerializeField]
-    private float m_spawnDelay;
+    private Collider2D m_southSpawnArea;
 
-    private float m_lastSpawn;
+    [SerializeField]
+    private Collider2D m_westSpawnArea;
 
-    private void OnEnable()
+    [SerializeField]
+    private SpawnLibrary m_spawnLibrary;
+
+    public void SpawnEnemy(SpawnType type, SpawnDirection direction, Vector3 spawnOffset)
     {
-        m_lastSpawn = Time.time;
-    }
-
-    private void Update()
-    {
-        if (Time.time - m_lastSpawn > m_spawnDelay)
+        var spawnArea = direction switch
         {
-            m_lastSpawn = Time.time;
-            SpawnEnemy();
-        }
-    }
-
-    /// <summary>
-    /// Spawns a GarbageTruck
-    /// </summary>
-    /// <returns></returns>
-    public void SpawnEnemy()
-    {
-        float spawnPositionX = Random.Range(m_spawnArea.bounds.min.x, m_spawnArea.bounds.max.y);
-        float spawnPositionY = m_spawnArea.bounds.center.y;
-
-        // set the position where the garbage truck will be spawned
-        Vector3 spawnPosition = new Vector2(spawnPositionX, spawnPositionY);
-
-        Instantiate(m_enemyPrefab, spawnPosition, transform.rotation);
+            SpawnDirection.North => m_northSpawnArea,
+            SpawnDirection.East => m_eastSpawnArea,
+            SpawnDirection.South => m_southSpawnArea,
+            SpawnDirection.West => m_westSpawnArea,
+            _ => null,
+        };
+        Vector3 spawnPosition = spawnArea.bounds.center + spawnOffset;
+        Instantiate(m_spawnLibrary.CheckOutPrefab(type), spawnPosition, spawnArea.gameObject.transform.rotation);
     }
 }

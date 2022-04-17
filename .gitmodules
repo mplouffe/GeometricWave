@@ -1,0 +1,3 @@
+[submodule "GeometricWave_LevelBuildingTool"]
+	path = GeometricWave_LevelBuildingTool
+	url = https://github.com/mplouffe/GeometricWave_LevelBuildingTool.git

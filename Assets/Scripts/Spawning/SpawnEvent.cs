@@ -21,6 +21,9 @@ public class SpawnEvent
 {
     public SpawnType type;
     public SpawnDirection direction;
+
+    public float distance;
+
     public float spawnRotation;
     public Vector2 spawnOffset;
 }
