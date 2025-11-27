@@ -8,7 +8,11 @@ public class WrapToScreen : MonoBehaviour
     [SerializeField]
     private Rigidbody2D m_rigidBody;
 
-    public float xMin, xMax, yMin, yMax;
+    [SerializeField]
+    private float m_xBound;
+
+    [SerializeField]
+    private float m_yBound;
 
     private void OnEnable()
     {
@@ -20,25 +24,25 @@ public class WrapToScreen : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (transform.position.x < xMin)
+        if (transform.position.x < -m_xBound)
         {
-            transform.SetPositionAndRotation(new Vector3(xMin, transform.position.y, 0), transform.rotation);
+            transform.SetPositionAndRotation(new Vector3(-m_xBound, transform.position.y, 0), transform.rotation);
             m_rigidBody.velocity = new Vector2(0, m_rigidBody.velocity.y);
         }
-        else if (transform.position.x > xMax)
+        else if (transform.position.x > m_xBound)
         {
-            transform.SetPositionAndRotation(new Vector3(xMax, transform.position.y, 0), transform.rotation);
+            transform.SetPositionAndRotation(new Vector3(m_xBound, transform.position.y, 0), transform.rotation);
             m_rigidBody.velocity = new Vector2(0, m_rigidBody.velocity.y);
         }
         
-        if (transform.position.y < yMin)
+        if (transform.position.y < -m_yBound)
         {
-            transform.SetPositionAndRotation(new Vector3(transform.position.x, yMin, 0), transform.rotation);
+            transform.SetPositionAndRotation(new Vector3(transform.position.x, -m_yBound, 0), transform.rotation);
             m_rigidBody.velocity = new Vector2(m_rigidBody.velocity.x, 0);
         }
-        else if (transform.position.y > yMax)
+        else if (transform.position.y > m_yBound)
         {
-            transform.SetPositionAndRotation(new Vector3(transform.position.x, yMax, 0), transform.rotation);
+            transform.SetPositionAndRotation(new Vector3(transform.position.x, m_yBound, 0), transform.rotation);
             m_rigidBody.velocity = new Vector2(m_rigidBody.velocity.x, 0);
         }
     }

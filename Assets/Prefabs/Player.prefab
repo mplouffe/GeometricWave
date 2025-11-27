@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1005101999}
   - component: {fileID: 1005102000}
   - component: {fileID: 5450032651952870446}
+  - component: {fileID: 9182117507591072799}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -124,10 +125,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_rigidBody: {fileID: 7415608909464030494}
-  xMin: -41
-  xMax: 41
-  yMin: -25
-  yMax: 25
+  m_xBound: 0
+  m_yBound: 0
 --- !u!114 &1005101999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,23 +139,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1c9400c10bfadc4899bcb33d651f34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_boostAction:
-    m_Name: Boost
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 83a59e58-331a-49c5-9e9e-e1c60276bf5e
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 8d40a4b1-d686-4134-90b8-88e6195717f8
-      m_Path: <Gamepad>/buttonSouth
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Boost
-      m_Flags: 0
-    m_Flags: 0
   speedBoost: 100
   boostDuration: 0.2
   boostCooldown: 2
@@ -210,6 +192,18 @@ MonoBehaviour:
   currentHealth: 0
   explosion: {fileID: 100010, guid: 645413a00f7bd0242bbd6d0e5eb6f439, type: 3}
   player: {fileID: 110874}
+--- !u!114 &9182117507591072799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73213f63c89beb548a59ff9afb1b2f1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &131448
 GameObject:
   m_ObjectHideFlags: 0

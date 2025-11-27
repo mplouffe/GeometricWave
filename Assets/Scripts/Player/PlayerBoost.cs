@@ -4,85 +4,82 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class PlayerBoost : MonoBehaviour
+namespace lvl_0
 {
-    [SerializeField]
-    private InputAction m_boostAction;
-
-    public float speedBoost;
-    public float boostDuration;
-    public float boostCooldown;
-
-    private bool boosting = false;
-    private bool boostOnCooldown = false;
-
-    private float lastBoost;
-
-    private Slider boostCooldownSlider;
-
-    [SerializeField]
-    private Rigidbody2D m_rigidBody;
-
-    void Start()
+    [RequireComponent(typeof(Rigidbody2D), typeof(PlayerInputManager))]
+    public class PlayerBoost : MonoBehaviour
     {
-        boostCooldownSlider = GameObject.FindGameObjectWithTag("boostUI").GetComponent<Slider>();
-        boostCooldownSlider.value = 10;
-    }
+        public float speedBoost;
+        public float boostDuration;
+        public float boostCooldown;
 
-    private void OnEnable()
-    {
-        m_boostAction.Enable();
-        if (m_rigidBody == null)
+        private bool boosting = false;
+        private bool boostOnCooldown = false;
+
+        private float lastBoost;
+
+        private Slider boostCooldownSlider;
+
+        private InputSource m_inputSource;
+
+        [SerializeField]
+        private Rigidbody2D m_rigidBody;
+
+        void Start()
         {
-            m_rigidBody = GetComponent<Rigidbody2D>();
+            m_inputSource = GetComponent<PlayerInputManager>().GetInputSource();
+            boostCooldownSlider = GameObject.FindGameObjectWithTag("boostUI").GetComponent<Slider>();
+            boostCooldownSlider.value = 10;
         }
-    }
 
-    private void OnDisable()
-    {
-        m_boostAction.Disable();
-    }
-
-    void Update()
-    {
-        var lastBoostInterval = Time.time - lastBoost;
-
-        if (boostOnCooldown)
+        private void OnEnable()
         {
-            if (lastBoostInterval < boostCooldown)
+            if (m_rigidBody == null)
             {
-                var delta = (lastBoostInterval / boostCooldown) * 10;
-                boostCooldownSlider.value = delta;
-            }
-            else
-            {
-                boostCooldownSlider.value = 10;
-                boostOnCooldown = false;
+                m_rigidBody = GetComponent<Rigidbody2D>();
             }
         }
 
-        if (boosting)
+        void Update()
         {
-            if (lastBoostInterval < boostDuration)
-            {
-                Vector3 boostForce = gameObject.transform.up * speedBoost;
-                m_rigidBody.AddForce(boostForce);
-            }
-            else
-            {
-                boosting = false;
-            }
-        }
+            var lastBoostInterval = Time.time - lastBoost;
 
-        if (!boosting && !boostOnCooldown)
-        {
-            if (m_boostAction.triggered)
+            if (boostOnCooldown)
             {
-                lastBoost = Time.time;
-                boostOnCooldown = true;
-                boosting = true;
-                boostCooldownSlider.value = 0;
+                if (lastBoostInterval < boostCooldown)
+                {
+                    var delta = (lastBoostInterval / boostCooldown) * 10;
+                    boostCooldownSlider.value = delta;
+                }
+                else
+                {
+                    boostCooldownSlider.value = 10;
+                    boostOnCooldown = false;
+                }
+            }
+
+            if (boosting)
+            {
+                if (lastBoostInterval < boostDuration)
+                {
+                    Vector3 boostForce = gameObject.transform.up * speedBoost;
+                    m_rigidBody.AddForce(boostForce);
+                }
+                else
+                {
+                    boosting = false;
+                }
+            }
+
+            if (!boosting && !boostOnCooldown)
+            {
+                if (m_inputSource.Gameplay.Boost.triggered)
+                {
+                    lastBoost = Time.time;
+                    boostOnCooldown = true;
+                    boosting = true;
+                    boostCooldownSlider.value = 0;
+                }
             }
         }
     }

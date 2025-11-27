@@ -2,49 +2,44 @@
 using System.Collections;
 using UnityEngine.InputSystem;
 
-/// <summary>
-/// Player Shooting Class
-/// the shooting script for the player
-/// </summary>
-public class PlayerShooting : MonoBehaviour {
-
-    [SerializeField]
-    private InputAction m_shotAction;
-
-    [Header("Projectile Settings")]
-    [SerializeField]
-    private GameObject m_shot;
-
-    [SerializeField]
-    private Transform m_shotSpawn;
-    
-    [SerializeField]
-    private float m_fireRate = 0.5F;
-    
-    [SerializeField]
-    private float m_nextFire = 0.0F;
-
-    private void OnEnable()
+namespace lvl_0
+{
+    [RequireComponent(typeof(PlayerInputManager))]
+    public class PlayerShooting : MonoBehaviour
     {
-        m_shotAction.Enable();
-    }
 
-    private void OnDisable()
-    {
-        m_shotAction.Disable();
-    }
+        [Header("Projectile Settings")]
+        [SerializeField]
+        private GameObject m_shot;
 
-    void Update()
-    {
-        // if player is pressing shot and enough time has passed to shoot again
-        if (m_shotAction.triggered && m_nextFire < Time.time)
+        [SerializeField]
+        private Transform m_shotSpawn;
+
+        [SerializeField]
+        private float m_fireRate = 0.5F;
+
+        [SerializeField]
+        private float m_nextFire = 0.0F;
+
+        private InputSource m_inputSource;
+
+        private void Start()
         {
-            // set the next time the player can shoot
-            m_nextFire = Time.time + m_fireRate;
+            m_inputSource = GetComponent<PlayerInputManager>().GetInputSource();
+        }
 
-            // create the shot at the spawn position
-            // TODO: Object pool this to manage GC
-            GameObject clone = Instantiate(m_shot, m_shotSpawn.position, m_shotSpawn.rotation) as GameObject;
+        void Update()
+        {
+            // if player is pressing shot and enough time has passed to shoot again
+            if (m_inputSource.Gameplay.Shoot.triggered && m_nextFire < Time.time)
+            {
+                // set the next time the player can shoot
+                m_nextFire = Time.time + m_fireRate;
+
+                // create the shot at the spawn position
+                // TODO: Object pool this to manage GC
+                GameObject clone = Instantiate(m_shot, m_shotSpawn.position, m_shotSpawn.rotation) as GameObject;
+            }
         }
     }
 }
