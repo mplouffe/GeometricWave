@@ -1,10 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// Used to destroy object that are instantiated, but will never leave the screen
-/// such as the explosions on enemies
-/// </summary>
 public class DestroyByTime : MonoBehaviour {
 
     public float lifetime;      // how long the object will live until it is destroyed

@@ -1028,6 +1028,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11438366, guid: e85000f3357770444a9b3b3907ede309, type: 3}
+      propertyPath: m_collisionLayerMask.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 1068740754, guid: e85000f3357770444a9b3b3907ede309, type: 3}
       propertyPath: m_deadZone
       value: 0

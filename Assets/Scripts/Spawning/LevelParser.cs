@@ -2,41 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class LevelParser : MonoBehaviour
+namespace lvl_0
 {
-    [SerializeField]
-    private TextAsset m_levelJson;
-
-    [SerializeField]
-    private EnemySpawner m_enemySpawner;
-
-    private void OnEnable()
+    public class LevelParser : MonoBehaviour
     {
-        if (m_levelJson == null)
+        [SerializeField]
+        private TextAsset m_levelJson;
+
+        [SerializeField]
+        private EnemySpawner m_enemySpawner;
+
+        private Level m_currentLevel;
+
+        private void OnEnable()
         {
-            m_levelJson = Resources.Load<TextAsset>("level");
+            if (m_levelJson == null)
+            {
+                m_levelJson = Resources.Load<TextAsset>("level");
+            }
+
+            m_currentLevel = JsonUtility.FromJson<Level>(m_levelJson.text);
+            m_lastSpawn = Time.time;
         }
 
-        var level = JsonUtility.FromJson<Level>(m_levelJson.text);
-        Debug.Log(level.SpawnEvents[0].direction);
+        [SerializeField]
+        private float m_spawnDelay;
 
-        m_lastSpawn = Time.time;
-    }
+        private float m_lastSpawn;
 
-    [SerializeField]
-    private float m_spawnDelay;
-
-    private float m_lastSpawn;
-
-    private void Update()
-    {
-        if (Time.time - m_lastSpawn > m_spawnDelay)
+        private void Update()
         {
-            m_lastSpawn = Time.time;
-            SpawnType type = SpawnType.SquareFighter;
-            SpawnDirection direction = (SpawnDirection)Random.Range(0, 4);
-            m_enemySpawner.SpawnEnemy(type, direction, Vector3.zero);
+            if (Time.time - m_lastSpawn > m_spawnDelay)
+            {
+                m_lastSpawn = Time.time;
+                SpawnType type = SpawnType.SquareFighter;
+                SpawnDirection direction = (SpawnDirection)Random.Range(0, 4);
+                m_enemySpawner.SpawnEnemy(type, direction, Vector3.zero);
+            }
         }
     }
 }

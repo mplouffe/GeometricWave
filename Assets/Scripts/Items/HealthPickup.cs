@@ -1,27 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// On a collsion between two objects, destroy both objects.
-/// Before enemy health was built in, this was used to have the enemys just destroyed
-/// when hit by bullets that had this script attached.
-/// </summary>
-public class HealthPickup : MonoBehaviour {
-
-    void OnTriggerEnter(Collider other)
+namespace lvl_0
+{
+    public class HealthPickup : MonoBehaviour
     {
-        if(other.tag == "Boundary")
-        {
-            // when anything is instantiated, it will come into contact with the Boundary box
-            // so when it does, just return, don't destroy either object
-            return;
-        }
+        [SerializeField]
+        private LayerMask m_collectorMask;
 
-        if (other.tag == "Player")
+        void OnTriggerEnter(Collider other)
         {
-            other.GetComponent<PlayerHealth>().GetHealth(2);
-        }
+            int otherLayer = other.gameObject.layer;
 
-        Destroy(gameObject);            // destroy this object
+            if ((m_collectorMask.value & 1 << otherLayer) != 0)
+            {
+                other.GetComponent<EntityHealth>().GetHealth(2);
+                Destroy(gameObject);
+            }
+        }
     }
 }

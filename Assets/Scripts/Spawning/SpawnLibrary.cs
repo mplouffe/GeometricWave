@@ -2,40 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnLibrary : MonoBehaviour
+namespace lvl_0
 {
-    [SerializeField]
-    private SpawnDictionary m_rawDictionary;
-
-    private Dictionary<SpawnType, GameObject> m_dictionary;
-
-    void Start()
+    public class SpawnLibrary : MonoBehaviour
     {
-        m_dictionary = new Dictionary<SpawnType, GameObject>(m_rawDictionary.Dictionary.Length);
-        for (int i = 0; i < m_rawDictionary.Dictionary.Length; i++)
+        [SerializeField]
+        private SpawnDictionary m_rawDictionary;
+
+        private Dictionary<SpawnType, GameObject> m_dictionary;
+
+        void Start()
         {
-            if (!m_dictionary.ContainsKey(m_rawDictionary.Dictionary[i].Type))
+            m_dictionary = new Dictionary<SpawnType, GameObject>(m_rawDictionary.Dictionary.Length);
+            foreach(var dictionaryEntry in m_rawDictionary.Dictionary)
             {
-                m_dictionary.Add(m_rawDictionary.Dictionary[i].Type, m_rawDictionary.Dictionary[i].Prefab);
+                if (m_dictionary.ContainsKey(dictionaryEntry.Type))
+                {
+                    Debug.LogError($"Attempting to add duplicate key of type {dictionaryEntry.Type} to SpawnLibrary");
+                    continue;
+                }
+                m_dictionary.Add(dictionaryEntry.Type, dictionaryEntry.Prefab);
+            }
+        }
+
+        public GameObject CheckOutPrefab(SpawnType type)
+        {
+            if (m_dictionary.ContainsKey(type))
+            {
+                return m_dictionary[type];
             }
             else
             {
-                // TODO: log error
+                Debug.LogError($"Could not find type: {type} in SpawnDictionary");
+                return null;
             }
-        }
-    }
-
-    
-    public GameObject CheckOutPrefab(SpawnType type)
-    {
-        if (m_dictionary.ContainsKey(type))
-        {
-            return m_dictionary[type];
-        }
-        else
-        {
-            // TODO: log error
-            return null;
         }
     }
 }

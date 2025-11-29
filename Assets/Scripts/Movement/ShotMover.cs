@@ -1,49 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// ShotMove Script
-/// Used on enemy bullets.
-/// </summary>
-public class ShotMover : MonoBehaviour {
-
-    public float speed;             // speed of the shot
-    public GameObject shotSpark;    // reference to the explosion created when the shot is destroyed
-    public int damage = 1;          // the damage dealt by the shot
-
-    bool hit;                       // flag for if something has been hit
-
-
-	void Start () {
-        // fire the bullet forward at the bullet's speed
-        GetComponent<Rigidbody>().velocity = transform.up * speed;
-	}
-
-    void OnTriggerEnter(Collider other)
+namespace lvl_0
+{
+    [RequireComponent(typeof(Rigidbody2D))]
+    public class ShotMover : MonoBehaviour
     {
-        // if the bullet hit the player
-        if (other.tag == "Player")
+        [SerializeField]
+        private LayerMask m_collisionLayerMask;
+
+        [SerializeField]
+        private float m_speed;
+
+        [SerializeField]
+        private GameObject m_shotSparkPrefab;
+
+        [SerializeField]
+        private int damage = 1;
+
+        private void Start()
         {
-            other.GetComponent<PlayerHealth>().TakeDamage(damage);
-            hit = true;
+            // fire the bullet forward at the bullet's speed
+            GetComponent<Rigidbody2D>().velocity = transform.up * m_speed;
         }
 
-        // if the bullet hit the other enemy
-        if (other.tag == "Enemy")
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            other.GetComponent<EnemyHealth>().TakeDamage(damage);
-            hit = true;
-        }
+            int otherLayer = other.gameObject.layer;
 
-        // what to do when there is a hit
-        if (hit)
-        {
-            Instantiate(shotSpark, transform.position, transform.rotation);
-            Destroy(gameObject);
+            if ((m_collisionLayerMask.value & (1 << otherLayer)) != 0)
+            {
+                other.GetComponent<EntityHealth>().TakeDamage(damage);
+                Instantiate(m_shotSparkPrefab, transform.position, transform.rotation);
+                Destroy(gameObject);
+            }
         }
-
-        // NOTE: for more detailed comments, see the PlayerShotMover script
     }
-
-	
 }
